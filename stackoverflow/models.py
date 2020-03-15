@@ -61,7 +61,7 @@ class Answer(db.Model):
             lazy='dynamic'))
     question_id = db.Column(db.Integer, db.ForeignKey('question.id',
             ondelete='CASCADE'))
-    question = db.relationship('Question', backref=db.backref('anwsers',
+    question = db.relationship('Question', backref=db.backref('answers',
             lazy='dynamic'))
     created_at = db.Column(db.DateTime, default=datetime.now())
 

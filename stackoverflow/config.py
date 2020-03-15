@@ -14,7 +14,8 @@ class DevConfig(BaseConfig):
 
     DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = 'mysql://root@localhost:3306/qa?charset=utf8'
+    uri = 'mysql://root:{}@localhost:3306/qa?charset=utf8'
+    SQLALCHEMY_DATABASE_URI = uri.format(os.environ.get('MYSQL_PWD')) 
 
 
 class ProConfig(BaseConfig):

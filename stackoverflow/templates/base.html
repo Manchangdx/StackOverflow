@@ -100,7 +100,6 @@
     </section>
   </header>
   <!-- 导航栏 End -->
-  {% block content %} {% endblock %}
   <!-- 注册表单 Start -->
   <div class="panel-pop" id="signup">
     <h2>注册<i class="icon-remove"></i></h2>
@@ -129,6 +128,7 @@
   <!-- 这是给表单提供提交路由 -->
   <div id="signup-data" url="{{ url_for('front.signup')}}"></div>
   <!-- 注册表单 End -->
+  {% block content %} {% endblock %}
   <!-- 引入 JavaScript 文件 Start -->
   <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/jquery-ui-1.10.3.custom.min.js') }}"></script>

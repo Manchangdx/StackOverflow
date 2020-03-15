@@ -34,28 +34,29 @@ def add_question():
 def question_detail(id):
     question = Question.query.get(id)
     if question:
-        return render_template('question/detail.html', question = question)
+        return render_template('question/detail.html', question=question)
     current_app.logger.error('问题不存在')
     return redirect(url_for('front.index'))
 
 
+# 添加答案或答案的评论
 @question.route('/<int:id>/add_answer', methods=['POST'])
 @login_required
 def add_answer(id):
     # 如果 rtype 为 1 则表示添加答案，如果 rtype 为 2 则表示添加答案的评论
-    if request.form['rtype'] == 1:
+    if request.form['rtype'] == '1':
         question = Question.query.get(id)
-        if not query:
+        if not question:
             return jsonify(status="error", info="该问题不存在")
         answer = Answer(content=request.form['content'], author=current_user,
                 question=question)
         db.session.add(answer)
         db.session.commit()
         return jsonify(status="success", info="答案提交成功")
-    if request.form['rtype'] == 2:
+    if request.form['rtype'] == '2':
         answer = Answer.query.get(id)
         comment = Comment(content=request.form['content'], author=current_user,
                 answer=answer)
-        db.sessiona.add(comment)
+        db.session.add(comment)
         db.session.commit()
         return jsonify(status="success", info="对答案的评论提交成功")
