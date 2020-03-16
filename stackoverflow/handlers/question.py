@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for
+from flask import (Blueprint, render_template, request, jsonify, redirect,
+        url_for, current_app)
 from flask_login import login_required, current_user
 
 from ..models import db, User, Question, Answer, Comment
@@ -36,7 +37,8 @@ def question_detail(id):
     if question:
         return render_template('question/detail.html', question=question)
     current_app.logger.error('问题不存在')
-    return redirect(url_for('front.index'))
+    # 如果问题不存在，跳转到问题列表
+    return redirect(url_for('.question_list'))
 
 
 # 添加答案或答案的评论
