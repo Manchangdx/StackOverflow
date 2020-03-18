@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Stack Overflow - {{ question.title }}{% endblock %}
+
+{% block content%}
+  <!-- 蓝底白字横幅 Start -->
+  <div class="breadcrumbs">
+    <section class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>{{ question.title }}</h1>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- 蓝底白字横幅 End -->
+  <section class="container main-content">
+    <div class="row">
+      <!-- 左边栏问题详情 Start -->
+      <div class="col-md-9">
+        <!-- 问题的标题和详情 -->
+        <article class="question single-question question-type-normal">
+          <h2>{{ question.title }}</h2>
+          <div class="question-inner">{{ question.content }}</div>
+        </article>
+        <!-- 问题作者 -->
+        <div class="about-author clearfix">
+          <div class="author-bio">
+            <h4>作者:</h4>
+            {{ question.author.name }}
+          </div>
+        </div>
+        <!-- 答案列表 Start -->
+        <div id="commentlist" class="page-content">
+          <div class="boxedtitle page-title"><h2>答案 ( <span class="color">{{question.answers.count() }}</span> )</h2></div>
+          <ol class="commentlist clearfix">
+            {% for ans in question.answers %}
+              <li class="comment">
+                <div class="comment-body comment-body-answered clearfix">
+                  <div class="avatar"><img alt="" src="http://placehold.it/60x60/FFF/444"></div>
+                  <div class="comment-text">
+                    <div class="author clearfix">
+                      <div class="comment-author"><a href="#">{{ ans.author.name }}</a></div>
+                      <div class="comment-meta">
+                        <div class="date"><i class="icon-time"></i> {{ ans.created_at }}</div>
+                        <a class="comment-reply" href="#respond" ans-id="{{ ans.id }}" id="reply-answer"><i class="icon-reply"></i>回复</a>
+                      </div>
+                    </div>
+                    <div class="text">
+                      <p> {{ ans.content }}</p>
+                    </div>
+                  </div><br>
+                  <!-- 答案的回复列表 Start -->
+                  <ul class="children">
+                    {% for cm in ans.comments %}
+                      <li class="comment">
+                        <div class="comment-body comment-body-answered clearfix">
+                          <div class="avatar"><img alt="" src="http://placehold.it/60x60/FFF/444"></div>
+                          <div class="comment-text">
+                            <div class="author clearfix">
+                              <div class="comment-author"><a href="#">{{ cm.author.name }}</a></div>
+                              <div class="comment-meta">
+                                <div class="date"><i class="icon-time"></i> {{ cm.created_at }}</div>
+                              </div>
+                            </div>
+                          <div class="text">
+                            <p> {{ cm.content }}</p>
+                          </div>
+                        </div>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                  <!-- 答案的回复列表 End -->
+                </div>
+              </li>
+            {% endfor %}
+          </ol>
+        </div>
+        <!-- 答案列表 End -->
+        <!-- 提交答案和对答案的回复的表单 Start -->
+        <div id="respond" class="comment-respond page-content clearfix">
+          <div class="boxedtitle page-title"><h2>提交答案/回复</h2></div>
+          <div id="reply-info" rtype="1" rid="" qs-url="{{ url_for('question.add_answer', id=question.id) }}"></div>
+          <form action="" method="post" id="commentform" class="comment-form">
+            <div id="respond-textarea">
+              <p>
+                <label class="required" for="comment">回复<span>*</span></label>
+                <textarea id="comment" name="comment" aria-required="true" cols="58" rows="8"></textarea>
+              </p>
+            </div>
+            <p class="form-submit">
+              <input name="submit" type="button" id="submit" value="提交" class="button small color">
+            </p>
+          </form>
+        </div>
+        <!-- 提交答案和对答案的回复的表单 End -->
+      </div>
+      <!-- 左边栏问题详情 End -->
+      <!-- 右边栏登录按钮 Start -->
+      {% if current_user.is_authenticated %}
+        <aside class="col-md-3 sidebar">
+          <div class="widget">
+            <h3 class="widget_title">用户名：{{ current_user.name }}</h3>
+            <a href="{{ url_for('front.logout') }}">
+              <input type="button" value="退出登录" class="button color small">
+            </a>
+          </div>
+        </aside>
+      {% endif %}
+      <!-- 右边栏登录按钮 End -->
+    </div>
+  </section>
+{% endblock %}
+
+{% block footer %}
+  <script src="{{ url_for('static', filename='js/questions.js') }}"></script>
+{% endblock %}
