@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="author" content="liusong">
+  <!-- 移动 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- Main Style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Skins -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/skins/blue.css') }}">
+  <!-- Responsive Style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+<body>
+  <div class="loader">
+    <div class="loader_html"></div>
+  </div>
+  <div id="wrap" class="grid_1200">
+    <div class="login-panel">
+      <section class="container">
+        <div class="row">
+          <!-- 登录表单 Start -->
+          <div class="col-md-6">
+            <div class="page-content">
+              <h2>登录</h2>
+              <div class="form-style form-style-3">
+                <form method="post" action="{{ url_for('front.login') }}">
+                  <!-- 用户名和密码输入框 Start -->
+                  <div class="form-inputs clearfix">
+                    <p class="login-text">
+                      <input type="text" name='name' value="Username" onfocus="if (this.value == 'Username') {this.value = '';}"
+                          onblur="if (this.value == '') {this.value = 'Username';}">
+                      <i class="icon-user"></i>
+                    </p>
+                    <p class="login-password">
+                      <input type="password" name='password' value="Password" onfocus="if (this.value == 'Password') {this.value = '';}"
+                          onblur="if (this.value == '') {this.value = 'Password';}">
+                      <i class="icon-lock"></i>
+                    </p>
+                  </div>
+                  <!-- 用户名和密码输入框 End -->
+                  <!-- 提交按钮 Start -->
+                  <p class="form-submit login-submit" >
+                    <input type="submit" value="Log in" class="button color small login-submit submit">
+                  </p>
+                  <!-- 提交按钮 End -->
+                  <!-- 记住我 Start -->
+                  <!-- div class="rememberme">
+                    <label><input type="checkbox" checked="checked"> Remember Me</label>
+                  </div -->
+                  <!-- 记住我 End -->
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- 登录表单 End -->
+          <!-- 注册按钮 Start -->
+          <div class="col-md-6">
+            <div class="page-content Register">
+              <h2>注册</h2>
+              <a class="button color small signup">注册</a>
+            </div>
+          </div>
+          <!-- 注册按钮 End -->
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- 登录/注册面板 End -->
+  <!-- 是否显示登录按钮 Start -->
+  {% if not current_user.is_authenticated %}
+    <div id="header-top">
+      <section class="container clearfix">
+        <nav class="header-top-nav">
+          <ul>
+            <li><a href="login.html" id="login-panel"><i class="icon-user"></i>登录</a></li>
+          </ul>
+        </nav>
+      </section>
+    </div>
+  {% endif %}
+  <!-- 是否显示登录按钮 End -->
+  <!-- 导航栏 Start -->
+  <header id="header">
+    <section class="container clearfix">
+      <!-- 网站图标 -->
+      <div class="logo"><a href="/"><img alt="网站图标" src="{{ url_for('static', filename='images/logo75.png') }}"></a></div>
+      <nav class="navigation">
+        <ul>
+          <!-- 导航栏右侧的按钮 -->
+          <li id="nav-index"><a href="">首页</a></li>
+          <li id="nav-ask"><a href="">提问</a></li>
+          <li id="nav-question"><a href="">问题列表</a></li>
+        </ul>
+      </nav>
+    </section>
+  </header>
+  <!-- 导航栏 End -->
+  <!-- 注册表单 Start -->
+  <div class="panel-pop" id="signup">
+    <h2>注册<i class="icon-remove"></i></h2>
+    <div class="form-style form-style-3">
+      <form>
+        <div class="form-inputs clearfix">
+          <p>
+            <label class="required">用户名<span>*</span></label>
+            <input type="text" name="name" id="name">
+          </p>
+          <p>
+            <label class="required">邮箱<span>*</span></label>
+            <input type="email" name="email" id="email">
+          </p>
+          <p>
+            <label class="required">密码<span>*</span></label>
+            <input type="password" name="password" value="" id="password">
+          </p>
+        </div>
+        <p class="form-submit">
+          <input type="button" value="Sign up" class="button color small submit" id="submit-button">
+        </p>
+      </form>
+    </div>
+  </div>
+  <!-- 这是给表单提供提交路由 -->
+  <div id="signup-data" url="{{ url_for('front.signup')}}"></div>
+  <!-- 注册表单 End -->
+  {% block content %} {% endblock %}
+  <!-- 引入 JavaScript 文件 Start -->
+  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-ui-1.10.3.custom.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.easing.1.3.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/html5.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/twitter/jquery.tweet.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jflickrfeed.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.inview.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.tipsy.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/tabs.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.flexslider.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.prettyPhoto.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.carouFredSel-6.2.1-packed.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.scrollTo.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.nav.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/tags.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.bxslider.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+  <!-- 引入 JavaScript 文件 End -->
+  {% block footer%} {% endblock %}
+</body>
+</html>
